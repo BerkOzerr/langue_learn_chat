@@ -9,7 +9,7 @@ input {
 }
 
 .sidebar {
-  width: 340px;
+  width: 100%;
   background: var(--panel);
   border-right: 1px solid var(--line);
   padding: 20px 16px;

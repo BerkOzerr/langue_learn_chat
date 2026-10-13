@@ -12,7 +12,7 @@ export const guestUserPost = createAsyncThunk(
       // console.log(response);
       return response.data;
     } catch (error) {
-      console.log("API hatasi:", error);
+      // console.log("API hatasi:", error);
 
       return rejectWithValue(
         error.response?.data || error.message || "Bir hata oluştu",
@@ -38,13 +38,13 @@ export const guestSlice = createSlice({
       console.log("loading...");
     });
     builder.addCase(guestUserPost.fulfilled, (state, action) => {
-      console.log(action.payload);
-      console.log(state.isGuest);
+      // console.log(action.payload);
+      // console.log(state.isGuest);
 
       if (action.payload?.status === 200) {
         state.isGuest = true;
         state.guestName = action.payload?.guestName;
-        console.log(state.guestName);
+        // console.log(state.guestName);
         localStorage.setItem("guestName", action.payload?.guestName);
       }
 

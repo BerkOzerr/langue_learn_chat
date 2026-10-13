@@ -1,26 +1,34 @@
-const Room = ({ room, selected, onClick }) => {
-  const full = room.members.length >= room.maxMembers;
+const Room = ({ outRoom, selected, onClick }) => {
+  console.log(outRoom);
+  const room = {
+    name: outRoom?.room_name,
+    description: outRoom?.room_description,
+    language: outRoom?.room_langue,
+    level: outRoom?.room_level,
+    maxMembers: outRoom?.room_max_members,
+    members: outRoom?.inside_room_members.length,
+  };
+  console.log(room);
+  const full = room.members >= room.maxMembers;
   return (
-    <div className="w-full flex flex-col items-center justify-center h-48 ">
-      <li>
-        <button
-          className={"room" + (selected ? " selected" : "")}
-          onClick={onClick}
-        >
-          <span className="room-top">
-            <strong>{room.name}</strong>
-            <span className={"count" + (full ? " full" : "")}>
-              {room.members.length}/{room.maxMembers}
-            </span>
+    <li>
+      <button
+        className={"room" + (selected ? " selected" : "")}
+        onClick={onClick}
+      >
+        <span className="room-top">
+          <strong>{room.name}</strong>
+          <span className={"count" + (full ? " full" : "")}>
+            {room.members}/{room.maxMembers}
           </span>
-          <span className="desc">{room.description}</span>
-          <span className="tags">
-            <span className="tag">{room.language}</span>
-            <span className="tag">{room.level}</span>
-          </span>
-        </button>
-      </li>
-    </div>
+        </span>
+        <span className="desc">{room.description}</span>
+        <span className="tags">
+          <span className="tag">{room.language}</span>
+          <span className="tag">{room.level}</span>
+        </span>
+      </button>
+    </li>
   );
 };
 
