@@ -1,0 +1,66 @@
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+
+const BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
+export const guestUserPost = createAsyncThunk(
+  "guest/guestUserPost",
+  async (_, { rejectWithValue }) => {
+    // console.log(BASE_URL + "guest/create");
+
+    try {
+      const response = await axios.get(BASE_URL + "guest/create");
+      // console.log(response);
+      return response.data;
+    } catch (error) {
+      console.log("API hatasi:", error);
+
+      return rejectWithValue(
+        error.response?.data || error.message || "Bir hata oluştu",
+      );
+    }
+  },
+);
+
+export const guestSlice = createSlice({
+  name: "guest",
+  initialState: {
+    guestName: localStorage.getItem("guestName")
+      ? localStorage.getItem("guestName")
+      : "",
+    isGuest: localStorage.getItem("guestName") ? true : false,
+    errorMessage: "",
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(guestUserPost.pending, (state, action) => {
+      // Add user to the state array
+      state.errorMessage = "";
+      console.log("loading...");
+    });
+    builder.addCase(guestUserPost.fulfilled, (state, action) => {
+      console.log(action.payload);
+      console.log(state.isGuest);
+
+      if (action.payload?.status === 200) {
+        state.isGuest = true;
+        state.guestName = action.payload?.guestName;
+        console.log(state.guestName);
+        localStorage.setItem("guestName", action.payload?.guestName);
+      }
+
+      console.log("ok");
+    });
+
+    builder.addCase(guestUserPost.rejected, (state, action) => {
+      // Add user to the state array
+      state.isGuest = false;
+      state.errorMessage = action.payload?.errorName;
+      console.log(state.errorMessage);
+      console.error(action?.payload);
+    });
+  },
+});
+
+export const { guesting } = guestSlice.actions;
+
+export default guestSlice.reducer;

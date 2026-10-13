@@ -1,0 +1,21 @@
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+  --ink: #1b2a41;
+  --bg: #eef3f8;
+  --panel: #ffffff;
+  --line: #d8e1ec;
+  --blue: #2f5bea;
+  --sun: #f2b33d;
+  --muted: #5d6b80;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: system-ui, "Segoe UI", sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+}
