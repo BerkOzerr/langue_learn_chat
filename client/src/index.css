@@ -1,5 +1,5 @@
 @import "tailwindcss";
-
+@custom-variant dark (&:is(.dark *));
 :root {
   --ink: #1b2a41;
   --bg: #eef3f8;
@@ -8,11 +8,17 @@
   --blue: #2f5bea;
   --sun: #f2b33d;
   --muted: #5d6b80;
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
 }
 * {
   box-sizing: border-box;
 }
 body {
+  min-height: 100vh;
+  min-height: 100dvh;
   margin: 0;
   font-family: "Raleway", "Segoe UI", sans-serif;
   color: var(--ink);

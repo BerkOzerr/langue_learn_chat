@@ -1,5 +1,5 @@
 const Room = ({ outRoom, selected, onClick }) => {
-  console.log(outRoom);
+  // console.log(outRoom);
   const room = {
     name: outRoom?.room_name,
     description: outRoom?.room_description,
@@ -8,7 +8,7 @@ const Room = ({ outRoom, selected, onClick }) => {
     maxMembers: outRoom?.room_max_members,
     members: outRoom?.inside_room_members.length,
   };
-  console.log(room);
+  // console.log(room);
   const full = room.members >= room.maxMembers;
   return (
     <li>

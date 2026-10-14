@@ -1,14 +1,39 @@
 import { Moon, Sun } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { updateThema } from "../redux/slice/themaSlice";
 
 const Header = () => {
+  const { thema } = useSelector((state) => state.thema);
+  const dispatch = useDispatch();
+  console.log(thema);
+
   return (
     <div className="bg-black/70 text-white flex items-center justify-center lg:justify-between gap-2 lg:gap-0 w-full truncate flex-wrap px-6 py-8 mb-2 ">
       <span className="text-2xl lg:text-4xl">Langue Learn Chat</span>
       <div className="flex items-center justify-center p-2 gap-2 ">
         <div className="flex items-center gap-2 justify-center">
-          <Moon className="cursor-pointer stroke-indigo-400  shadow-[0_0_15px_rgba(0,0,0,0.15)] rounded-2xl shadow-indigo-400" />
-          <Sun className="stroke-amber-400 cursor-pointer  shadow-[0_0_15px_rgba(0,0,0,0.15)] rounded-2xl shadow-amber-400 hover:animate-spin" />
+          {thema === "dark" ? (
+            <div
+              onClick={() => dispatch(updateThema("light"))}
+              className="p-3 rounded-[50%] shadow-md shadow-indigo-400 flex justify-center items-center"
+            >
+              <Moon
+                stroke="var(--color-indigo-400)"
+                className="hover:animate-pulse delay-200    duration-100 ease-in-out transition-all"
+              />
+            </div>
+          ) : (
+            <div
+              onClick={() => dispatch(updateThema("dark"))}
+              className="p-3 rounded-[50%] shadow-md cursor-pointer shadow-amber-400 flex justify-center items-center"
+            >
+              <Sun
+                stroke="var(--color-amber-400)"
+                className=" hover:animate-spin delay-200 duration-100 ease-in-out transition-all"
+              />
+            </div>
+          )}
         </div>
       </div>
       <div className="flex items-center justify-center text-[12px] lg:text-2xl font-medium gap-4 ">

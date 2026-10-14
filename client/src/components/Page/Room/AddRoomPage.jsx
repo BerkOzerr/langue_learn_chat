@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { io } from "socket.io-client";
 import { createRoom } from "../../../redux/slice/roomSlice";
+import { useNavigate } from "react-router-dom";
 
 const AddRoomPage = ({ activeAddRoom, setActiveAddRoom }) => {
   const [addRoomName, setaddRoomName] = useState("");
@@ -12,7 +13,7 @@ const AddRoomPage = ({ activeAddRoom, setActiveAddRoom }) => {
   const [addRoomMaxMembers, setaddRoomMaxMembers] = useState(2);
   // const socket = io(import.meta.env.VITE_SERVER_BASE_URL);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const addRoom = () => {
     const room = {
       roomName: addRoomName,
@@ -30,8 +31,9 @@ const AddRoomPage = ({ activeAddRoom, setActiveAddRoom }) => {
   return (
     <form
       onSubmit={(e) => {
-        // e.preventDefault();
+        e.preventDefault();
         addRoom();
+        navigate("/rooms");
       }}
       className="flex flex-col justify-start p-8 gap-3 items-start w-3/4 rounded-xl h-120 absolute z-99 bg-black/40 text-white"
     >

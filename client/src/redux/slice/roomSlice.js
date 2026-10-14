@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "react-toastify";
 const BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
 export const createRoom = createAsyncThunk(
@@ -62,10 +63,6 @@ export const roomSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(createRoom.pending, (state) => {
-      console.log("Loading...");
-      state.isLoading = true;
-    });
     builder.addCase(createRoom.fulfilled, (state, action) => {
       console.log(action.payload);
       // const newRoom = action.payload;
@@ -73,11 +70,11 @@ export const roomSlice = createSlice({
       // if (!state.rooms.some((room) => room.id === newRoom.id)) {
       //   state.rooms = [...state.rooms, newRoom];
       // }
-      console.log("ok");
+      toast.success(action.payload?.message);
     });
     builder.addCase(createRoom.rejected, (state, action) => {
-      console.log(action?.payload);
-      console.error("error");
+      console.log(action.payload);
+      toast.error(action.payload?.message);
     });
 
     ///////
@@ -87,6 +84,7 @@ export const roomSlice = createSlice({
     });
     builder.addCase(getRoomList.fulfilled, (state, action) => {
       console.log(action.payload);
+      state.isLoading = false;
       state.rooms = action.payload;
 
       // console.log("ok");

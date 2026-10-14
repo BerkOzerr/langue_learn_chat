@@ -7,6 +7,17 @@ const createdAt = () => {
   return now.toISOString();
 };
 
+const findRoomNameDb = async (roomName) => {
+  const result = await pool.query(
+    `SELECT  room_name
+      FROM rooms.rooms
+      WHERE room_name = $1`,
+    [roomName],
+  );
+  // console.log(result);
+  return result;
+};
+
 router.post("/create", async (req, res) => {
   const createdTime = createdAt();
   const {
@@ -18,7 +29,13 @@ router.post("/create", async (req, res) => {
     messages,
     insideRoomMembers,
   } = req.body;
+  const existRoomName = findRoomNameDb(roomName);
 
+  if ((await existRoomName).rows.length === 1) {
+    return res.status(404).json({
+      message: `oda adi : ${roomName}  diğer odalardakilerden farklı olmalidir`,
+    });
+  }
   if (!roomName || !roomLangue || !roomLevel) {
     return res.status(400).json({
       message: "Oda adı, dili ve seviyesi zorunludur.",
